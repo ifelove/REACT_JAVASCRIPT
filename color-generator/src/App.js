@@ -6,7 +6,7 @@ import "./App.css";
 function App() {
   const [color, setColor] = React.useState("");
   const [error, setError] = React.useState(false);
-  const [list, setList] = React.useState([]);
+  const [list, setList] = React.useState(new Values('#f12345').all(10));
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -14,7 +14,7 @@ function App() {
     try {
       let colors = new Values(color).all(10);
       console.log(colors);
-      setList(colors)
+      setList(colors);
     } catch (error) {
       setError(true);
       console.log(error);
@@ -30,7 +30,7 @@ function App() {
             value={color}
             onChange={(e) => setColor(e.target.value)}
             placeholder="#f15025"
-            className={`${error ? 'error' : null} `}
+            className={`${error ? "error" : null} `}
           />
           <button className="btn" type="submit">
             submit
@@ -38,9 +38,18 @@ function App() {
         </form>
       </section>
       <section className="colors">
-       {list.map((color,index)=>{
-return <SingleColor key={index} list={list} index={index}/>
-       })}
+        {list.map((color, index) => {
+          //const hex=color.hex
+          console.log(color);
+          return (
+            <SingleColor
+              key={index}
+              {...color}
+              index={index}
+              hexColor={color.hex}
+            />
+          );
+        })}
       </section>
     </>
   );
